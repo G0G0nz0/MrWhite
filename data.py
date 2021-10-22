@@ -1,6 +1,9 @@
 import requests
 from prettyprinter import pprint as pp
 from prettytable import PrettyTable
+import rich
+import pandas as pd
+import json
 import sqlite3
 
 x = PrettyTable()
@@ -13,21 +16,36 @@ headers = {
 }
 
 
+def lead_officer_search(name):
+  callurl = url + "search/officers?q=" + name
+  response = requests.request("GET", callurl, headers=headers, data=payload).json()
+  pp(response)
+
+
+
+
+
 def company_call(company_no):
   callurl = url + "company/" + company_no
   response = requests.request("GET", callurl, headers=headers, data=payload).json()
+  # df = pd.json_normalize(response)
+  # print(df)
+
+  for i in response:
+    companyName = response['company_name']
+    print(companyName)
 
   pp(response)
-  PrettyTable(response)
 
-# company_call('11139204')
+company_call('11139204')
 
 
-def officer_call(company_no):
+def officers_call(company_no):
   callurl = url + "company/" + company_no + "/officers/"
   response = requests.request("GET", callurl, headers=headers, data=payload).json()
 
   pp(response)
+
 
 def posc(company_no):
   callurl = url + "company/" + company_no + "/persons-with-significant-control/"
@@ -35,10 +53,10 @@ def posc(company_no):
   pp(response)
 
 
-posc('11139204')
+# posc('11139204')
 
 
-
+# lead_officer_search('benjamin white')
 
 
 #

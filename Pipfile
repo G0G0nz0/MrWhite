@@ -10,6 +10,7 @@ requests = "*"
 sqlalchemy = "*"
 prettytable = "*"
 rich = "*"
+pandas = "*"
 
 [dev-packages]
 
